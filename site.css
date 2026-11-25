@@ -133,3 +133,44 @@ details.cal > summary::-webkit-details-marker { display: none; }
 .portrait-in img { display: block; }
 .date .date-time { display: block; margin-top: .35em; color: var(--accent); }
 .date .date-time:empty { display: none; }
+
+/* ---------- RSVP form (opens before WhatsApp) ---------- */
+#rsvp-dlg { width: min(440px, calc(100vw - 24px)); max-height: calc(100svh - 24px); margin: auto; padding: 0; border: 1px solid var(--line); border-radius: 14px; background: #0B1430; color: var(--ink); box-shadow: 0 30px 80px rgba(0, 0, 0, .6), 0 0 0 1px rgba(242, 196, 109, .18); overscroll-behavior: contain; }
+#rsvp-dlg::backdrop { background: rgba(5, 9, 22, .78); backdrop-filter: blur(3px); }
+#rsvp-dlg[open] { animation: rdIn .35s ease both; }
+@keyframes rdIn { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
+html.dlg-open { overflow: hidden; }
+html.custom-cursor #rsvp-dlg, html.custom-cursor #rsvp-dlg * { cursor: auto !important; }
+html.custom-cursor #rsvp-dlg :is(button, label, input[type="radio"], input[type="checkbox"]) { cursor: pointer !important; }
+html.custom-cursor #rsvp-dlg input:is([type="text"], [type="number"]) { cursor: text !important; }
+.rd { display: grid; gap: 18px; padding: 20px 20px 18px; font-family: var(--body); }
+.rd-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.rd-to { margin: 0 0 4px; font: .7rem var(--display); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+.rd-head h2 { margin: 0; font: 400 2.5rem/1 var(--script); color: #F4F6FB; }
+.rd-x { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--ink); font: 1.4rem/1 var(--body); }
+.rd-field { display: grid; gap: 6px; }
+.rd-field > span, .rd legend { font: .72rem var(--display); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.rd input[type="text"], .rd input[type="number"] { min-height: 48px; padding: 0 14px; border-radius: 8px; border: 1px solid #3A4C80; background: #111C3C; color: var(--ink); font: 1.05rem var(--body); }
+.rd input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.rd fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: grid; gap: 8px; }
+.rd legend { padding: 0; margin-bottom: 8px; }
+.rd-reply { grid-template-columns: 1fr 1fr; }
+.rd-reply label, .rd-events label { position: relative; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: #111C3C; transition: border-color .25s, background .25s; }
+.rd-reply label:has(:checked), .rd-events label:has(:checked) { border-color: var(--accent); background: rgba(242, 196, 109, .1); }
+.rd-reply label:has(:focus-visible), .rd-events label:has(:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.rd input[type="radio"], .rd input[type="checkbox"] { flex: none; width: 18px; height: 18px; margin: 0; accent-color: #E2AA4F; }
+.rd-reply span { font-size: .98rem; line-height: 1.2; }
+.rd-events span { display: grid; line-height: 1.25; }
+.rd-events b { font-weight: 500; }
+.rd-events small { color: var(--muted); font-size: .86rem; }
+.rd-yes { display: grid; gap: 18px; }
+.rd-yes[hidden] { display: none; }
+.rd-step { display: grid; grid-template-columns: 48px 88px 48px; gap: 8px; }
+.rd-step button { min-height: 48px; border-radius: 8px; border: 1px solid #3A4C80; background: #111C3C; color: var(--accent); font: 1.4rem/1 var(--body); }
+.rd-step input { text-align: center; padding: 0 6px; -moz-appearance: textfield; }
+.rd-step input::-webkit-inner-spin-button, .rd-step input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.rd-err { margin: -6px 0 -6px; color: #FFB4A8; font-size: .95rem; }
+.rd-err:empty { display: none; }
+.rd-go { width: 100%; }
+.rd-note { margin: -8px 0 0; text-align: center; color: var(--muted); font-size: .88rem; }
+@media (max-width: 380px) { .rd-reply { grid-template-columns: 1fr; } }

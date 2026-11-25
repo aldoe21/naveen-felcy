@@ -567,18 +567,98 @@ window.CONFIG = window.CONFIG || {
     if (!box) return;
     const by = $('#rsvp-by');
     if (by) { by.hidden = !C.rsvpBy; if (C.rsvpBy) by.textContent = `Kindly let us know by ${longDate(C.rsvpBy)}.`; }
-    box.innerHTML = C.rsvp.map(c => {
-      const msg = `Hello ${c.name}, I'd like to RSVP for ${C.groomShort} & ${C.brideShort}'s wedding.\nName: \nNumber of guests: \nAttending: Engagement / Holy Matrimony / Reception`;
+    const couple = `${C.groomShort} & ${C.brideShort}`;
+    const waLink = (c, text) => `https://wa.me/${c.phone}?text=${encodeURIComponent(text)}`;
+    box.innerHTML = C.rsvp.map((c, i) => {
+      /* the plain link still works if the form can't open */
+      const msg = `Hello ${c.name}, I'd like to RSVP for ${couple}'s wedding.\nName: \nNumber of guests: \nAttending: ${C.events.map(e => e.title).join(' / ')}`;
       return `<article class="rsvp-card">
         <p class="rsvp-side">${esc(c.side)}</p>
         <p class="rsvp-name">${esc(c.name)}</p>
         <p class="rsvp-num">${esc(c.display)}</p>
         <div class="rsvp-actions">
-          <a class="btn btn-sm" href="https://wa.me/${esc(c.phone)}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">WhatsApp ${esc(c.name)}</a>
+          <a class="btn btn-sm" data-rsvp="${i}" href="${esc(waLink(c, msg))}" target="_blank" rel="noopener">WhatsApp ${esc(c.name)}</a>
           <a class="btn btn-sm btn-ghost" href="tel:+${esc(c.phone)}">Call</a>
         </div>
       </article>`;
     }).join('');
+
+    /* RSVP form: name, guests and events, then WhatsApp opens with the message ready */
+    const dlg = document.createElement('dialog');
+    if (typeof dlg.showModal !== 'function') return;
+    const shortDate = iso => { const p = parts(iso); return `${DAYS[p.wd].slice(0, 3)} ${p.d} ${MONTHS[p.mo - 1].slice(0, 3)}`; };
+    const MAXG = 20;
+    dlg.id = 'rsvp-dlg';
+    dlg.setAttribute('aria-labelledby', 'rd-title');
+    dlg.innerHTML = `<form class="rd" novalidate>
+      <header class="rd-head">
+        <div><p class="rd-to" id="rd-to"></p><h2 id="rd-title">Will you join us?</h2></div>
+        <button type="button" class="rd-x" data-close aria-label="Close">×</button>
+      </header>
+      <label class="rd-field"><span>Your name</span><input id="rd-name" name="name" type="text" autocomplete="name" autocapitalize="words" maxlength="80" required></label>
+      <fieldset class="rd-reply"><legend>Your reply</legend>
+        <label><input type="radio" name="reply" value="yes" checked><span>Joyfully accept</span></label>
+        <label><input type="radio" name="reply" value="no"><span>Regretfully decline</span></label>
+      </fieldset>
+      <div class="rd-yes">
+        <div class="rd-field"><span id="rd-g-lbl">Number of guests, including you</span>
+          <div class="rd-step" role="group" aria-labelledby="rd-g-lbl">
+            <button type="button" data-step="-1" aria-label="One fewer guest">−</button>
+            <input id="rd-guests" name="guests" type="number" inputmode="numeric" min="1" max="${MAXG}" value="1" aria-labelledby="rd-g-lbl">
+            <button type="button" data-step="1" aria-label="One more guest">+</button>
+          </div>
+        </div>
+        <fieldset class="rd-events"><legend>Attending</legend>
+          ${C.events.map((e, k) => `<label><input type="checkbox" name="ev" value="${k}" checked><span><b>${esc(e.title)}</b><small>${esc(shortDate(e.start))}${e.time ? ' · ' + esc(e.time) : ''}</small></span></label>`).join('')}
+        </fieldset>
+      </div>
+      <p class="rd-err" id="rd-err" role="alert"></p>
+      <button type="submit" class="btn rd-go">Continue to WhatsApp</button>
+      <p class="rd-note">WhatsApp opens with your reply written out. Just tap send.</p>
+    </form>`;
+    document.body.appendChild(dlg);
+    const form = $('form', dlg), name = $('#rd-name', dlg), guests = $('#rd-guests', dlg), err = $('#rd-err', dlg);
+    let to = null;
+    const reply = () => form.reply.value;
+    const sync = () => { const yes = reply() === 'yes'; $('.rd-yes', dlg).hidden = !yes; err.textContent = ''; };
+    const clampG = () => { const n = Math.round(+guests.value); guests.value = Math.min(MAXG, Math.max(1, Number.isFinite(n) && n > 0 ? n : 1)); };
+    form.addEventListener('change', e => { if (e.target.name === 'reply') sync(); else if (e.target === guests) clampG(); else err.textContent = ''; });
+    $$('[data-step]', dlg).forEach(b => b.addEventListener('click', () => { guests.value = (+guests.value || 1) + (+b.dataset.step); clampG(); }));
+    $('[data-close]', dlg).addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });   // tap outside the card
+    dlg.addEventListener('close', () => html.classList.remove('dlg-open'));
+
+    box.addEventListener('click', e => {
+      const a = e.target.closest('[data-rsvp]');
+      if (!a) return;
+      e.preventDefault();
+      to = C.rsvp[+a.dataset.rsvp];
+      $('#rd-to', dlg).textContent = `To ${to.name} · ${to.side}`;
+      err.textContent = '';
+      sync();
+      html.classList.add('dlg-open');
+      dlg.showModal();
+      if (!name.value) name.focus();
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const who = name.value.trim().replace(/\s+/g, ' ');
+      if (!who) { err.textContent = 'Please enter your name.'; name.focus(); return; }
+      let text;
+      if (reply() === 'yes') {
+        const evs = $$('input[name="ev"]:checked', dlg).map(x => C.events[+x.value]);
+        if (!evs.length) { err.textContent = 'Please tick at least one event, or choose “Regretfully decline”.'; return; }
+        clampG();
+        text = `Hello ${to.name}, here is my RSVP for ${couple}'s wedding.\n\nName: ${who}\nNumber of guests: ${guests.value}\nAttending:\n${evs.map(ev => `• ${ev.title} (${shortDate(ev.start)})`).join('\n')}\n\nThank you!`;
+      } else {
+        text = `Hello ${to.name}, thank you for inviting me to ${couple}'s wedding. Sadly, I won't be able to attend. Wishing them both every blessing.\n\nName: ${who}`;
+      }
+      const url = waLink(to, text);
+      const win = window.open(url, '_blank');   // a 'noopener' feature would make this return null
+      if (win) win.opener = null; else location.href = url;
+      dlg.close();
+    });
   }
 
   /* ---------- Reveal on scroll ---------- */
