@@ -1,0 +1,135 @@
+/* Site components: couple, event cards, calendar menu, venue map, gallery, RSVP and buttons.
+   Loaded after invite.css. */
+
+.tw-slow { animation: twinkle 4.4s ease-in-out infinite; }
+#caption .cap-place { margin: .5em 0 0; font-family: var(--body); font-style: italic; font-size: clamp(.9rem, 2.6vw, 1.05rem); opacity: .85; animation: capIn 1.2s ease both .8s; text-wrap: balance; }
+
+/* ---------- Hero ---------- */
+.eyebrow .x { display: inline-block; width: .8em; height: 1em; vertical-align: -.12em; margin-right: .55em; fill: var(--accent); }
+.families { margin: 0; font-family: var(--display); font-size: clamp(.95rem, 2.6vw, 1.1rem); letter-spacing: .1em; color: var(--silver); text-wrap: balance; max-width: 34ch; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: .4rem; }
+.names > span:not(.amp) { display: block; text-wrap: balance; }
+
+/* ---------- Couple ---------- */
+.couple { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: clamp(20px, 4vw, 44px); align-items: start; max-width: 900px; margin-inline: auto; }
+.person { display: grid; justify-items: center; text-align: center; gap: .4rem; min-width: 0; }
+.portrait { width: min(250px, 66vw); max-width: 100%; aspect-ratio: 4 / 5; padding: 7px; border: 1px solid var(--silver-dim); border-radius: 50% 50% 10px 10px / 40% 40% 10px 10px; margin-bottom: .6rem; }
+.portrait-in {
+  width: 100%; height: 100%; display: grid; place-items: center; overflow: hidden;
+  border-radius: 50% 50% 6px 6px / 40% 40% 6px 6px;
+  background:
+    radial-gradient(1.2px 1.2px at 22% 30%, var(--star) 50%, transparent 51%),
+    radial-gradient(1px 1px at 70% 18%, var(--star) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 80% 56%, var(--star) 50%, transparent 51%),
+    radial-gradient(1px 1px at 34% 72%, var(--star) 50%, transparent 51%),
+    radial-gradient(70% 50% at 50% 100%, rgba(242, 196, 109, .22), transparent 70%),
+    linear-gradient(180deg, #1E2E5C, #0A1229);
+}
+.portrait-in img { width: 100%; height: 100%; object-fit: cover; }
+.pi { font-family: var(--script); font-size: clamp(5rem, 18vw, 7rem); line-height: 1; color: var(--silver); text-shadow: 0 0 24px rgba(203, 211, 228, .45); }
+.role { margin: 0; font-family: var(--display); font-size: .74rem; letter-spacing: .3em; text-transform: uppercase; color: var(--accent); }
+.pname { margin: 0; font-family: var(--script); font-weight: 400; font-size: clamp(2.6rem, 8vw, 3.4rem); line-height: 1.05; color: var(--ink); text-wrap: balance; }
+.parents, .sib { margin: 0; color: var(--muted); max-width: 30ch; text-wrap: balance; }
+.parents b, .sib b { font-weight: 500; color: var(--ink); }
+.fam { margin: .35rem 0 .2rem; padding: .4em 1.1em; border: 1px solid var(--line); border-radius: 999px; font-family: var(--display); font-size: .74rem; letter-spacing: .16em; text-transform: uppercase; color: var(--silver); }
+.couple-mid { align-self: center; display: grid; justify-items: center; gap: .6rem; color: var(--accent); padding-top: 3rem; }
+.couple-mid svg { width: 64px; height: 64px; }
+.couple-mid span { font-family: var(--script); font-size: 2.6rem; line-height: 1; color: var(--silver); }
+@media (max-width: 720px) {
+  .couple { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .couple-mid { padding-top: 0; }
+}
+
+/* ---------- Events: shared ---------- */
+.events { display: grid; gap: clamp(16px, 3vw, 28px); }
+.event { position: relative; min-width: 0; }
+.ev-when { margin: 0; }
+.ev-kicker { margin: 0; font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.ev-time.tbc { color: var(--silver); font-style: italic; font-weight: 400; letter-spacing: 0; }
+.ev-venue strong { font-weight: 500; color: var(--ink); }
+.ev-icon { color: var(--accent); }
+.ev-icon svg { display: block; width: 100%; height: 100%; }
+
+/* A: cards */
+.ev-a { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.ev-a .event { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 14px; padding: clamp(20px, 4vw, 28px); background: linear-gradient(180deg, #16244B, #111C3C); border: 1px solid var(--line); border-radius: 6px; }
+.ev-a .ev-icon { position: absolute; top: 24px; right: 22px; width: 34px; height: 34px; opacity: .6; }
+.ev-a .ev-when { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 12px; padding: 0 44px 14px 0; border-bottom: 1px solid var(--line); }
+.ev-a .ev-day { grid-column: 1; grid-row: 1 / 3; font-family: var(--display); font-size: 2.8rem; line-height: 1; color: var(--silver); }
+.ev-a .ev-wd { grid-column: 2; grid-row: 1; align-self: end; }
+.ev-a .ev-mon { grid-column: 2; grid-row: 2; align-self: start; }
+.ev-a .ev-wd, .ev-a .ev-mon { font-size: .7rem; line-height: 1.5; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+
+/* Calendar menu */
+details.cal { position: relative; }
+details.cal > summary { list-style: none; }
+details.cal > summary::-webkit-details-marker { display: none; }
+.cal-menu { position: absolute; z-index: 5; top: calc(100% + 8px); left: 0; width: max-content; min-width: 220px; max-width: 78vw; display: grid; padding: 6px; background: #0A1229; border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 16px 40px rgba(0, 0, 0, .5); text-align: left; }
+.cal-menu a, .cal-menu button { display: flex; align-items: center; min-height: 44px; padding: 0 14px; border: 0; border-radius: 6px; background: none; color: var(--ink); font: inherit; font-size: .92rem; text-decoration: none; text-align: left; cursor: pointer; }
+.cal-menu a:hover, .cal-menu button:hover, .cal-menu a:focus-visible, .cal-menu button:focus-visible { background: rgba(203, 211, 228, .1); }
+
+/* ---------- Venue map ---------- */
+.map-card { max-width: 660px; margin-inline: auto; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: radial-gradient(60% 60% at 30% 50%, rgba(242, 196, 109, .06), transparent 70%), #0B1430; }
+.map-card svg { display: block; width: 100%; height: auto; }
+.m-grid { stroke: rgba(203, 211, 228, .06); stroke-width: 1; }
+.m-leg { stroke: var(--silver); stroke-width: 1.4; stroke-dasharray: 4 6; opacity: .55; }
+.m-dist { fill: var(--muted); font: italic 20px var(--body); }
+.m-halo { fill: rgba(242, 196, 109, .16); transition: fill .3s; }
+.m-pin:hover .m-halo, .m-pin:focus-visible .m-halo { fill: rgba(242, 196, 109, .34); }
+.m-pin:focus-visible { outline: none; }
+.m-pin:focus-visible .m-halo { stroke: var(--accent); stroke-width: 2; }
+.m-dot { fill: var(--accent); stroke: #0B1430; stroke-width: 2; }
+.m-title { fill: var(--ink); font: 27px var(--display); letter-spacing: .02em; }
+.m-sub { fill: var(--muted); font: 21px var(--body); }
+.m-north path { fill: var(--silver); }
+.m-north text, .m-scale text { fill: var(--muted); font: 14px var(--display); letter-spacing: .1em; }
+.m-scale line { stroke: var(--muted); stroke-width: 1.4; }
+.map-note { margin: 14px auto 0; max-width: 60ch; text-align: center; color: var(--muted); font-size: .92rem; }
+
+/* ---------- Gallery and lightbox ---------- */
+/* Feature collage: the first photo large, the rest stacked beside it.
+   The 2fr : 1fr split keeps the big tile at exactly 4:5. With other photo counts it falls back to a grid. */
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(8px, 2vw, 16px); max-width: 860px; margin-inline: auto; }
+.gallery:has(> .ph:nth-child(3):last-child) { grid-template-columns: 2fr 1fr; max-width: 640px; }
+.gallery:has(> .ph:nth-child(3):last-child) > .ph:first-child { grid-row: span 2; aspect-ratio: auto; }
+.gallery:has(> .ph:nth-child(3):last-child) > .ph:not(:first-child) { border-radius: 50% 50% 6px 6px / 30% 30% 6px 6px; }
+.ph { display: block; padding: 0; aspect-ratio: 4 / 5; max-width: 100%; overflow: hidden; cursor: zoom-in; border: 1px solid var(--line); border-radius: 50% 50% 6px 6px / 40% 40% 6px 6px; background: var(--surface); transition: border-color .4s, box-shadow .4s; }
+.ph img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform .9s ease; }
+.ph:hover, .ph:focus-visible { border-color: var(--silver-dim); box-shadow: 0 0 26px rgba(203, 211, 228, .18); }
+.ph:hover img { transform: scale(1.05); }
+.gallery-note { margin: 18px auto 0; text-align: center; color: var(--muted); font-style: italic; }
+#lightbox { position: fixed; inset: 0; z-index: 76; display: grid; place-items: center; padding: 64px max(16px, env(safe-area-inset-right, 0px)) 64px max(16px, env(safe-area-inset-left, 0px)); background: rgba(5, 9, 22, .94); opacity: 0; transition: opacity .3s ease; }
+#lightbox.on { opacity: 1; }
+#lb-img { max-width: min(100%, 900px); max-height: calc(100svh - 140px); border-radius: 6px; box-shadow: 0 20px 60px rgba(0, 0, 0, .6); }
+.lb-btn { position: absolute; width: 48px; height: 48px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(203, 211, 228, .4); background: rgba(10, 18, 41, .8); color: var(--ink); font: 1.5rem/1 var(--body); cursor: pointer; }
+#lb-close { top: calc(env(safe-area-inset-top, 0px) + 12px); right: max(12px, calc(env(safe-area-inset-right, 0px) + 12px)); }
+#lb-prev { left: max(10px, calc(env(safe-area-inset-left, 0px) + 10px)); top: 50%; translate: 0 -50%; }
+#lb-next { right: max(10px, calc(env(safe-area-inset-right, 0px) + 10px)); top: 50%; translate: 0 -50%; }
+#lb-cap { position: absolute; left: 0; right: 0; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); margin: 0; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+/* ---------- RSVP ---------- */
+.rsvp-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 18px; max-width: 760px; margin-inline: auto; }
+.rsvp-card { display: grid; justify-items: center; gap: .3rem; text-align: center; padding: 28px 20px; border: 1px solid var(--line); border-radius: 8px; background: linear-gradient(180deg, #16244B, #111C3C); }
+.rsvp-side { margin: 0; font-family: var(--display); font-size: .72rem; letter-spacing: .26em; text-transform: uppercase; color: var(--accent); }
+.rsvp-name { margin: 0; font-family: var(--script); font-size: 2.8rem; line-height: 1.05; color: var(--ink); }
+.rsvp-num { margin: 0; font-family: var(--display); letter-spacing: .1em; color: var(--silver); font-variant-numeric: tabular-nums; user-select: all; }
+.rsvp-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: .8rem; }
+.rsvp-by { margin: 22px auto 0; text-align: center; color: var(--silver); }
+
+/* ---------- Footer ---------- */
+.site-foot .fams { margin: 0; font-family: var(--display); letter-spacing: .1em; color: var(--ink); text-wrap: balance; }
+.site-foot .compl { margin: 0; max-width: 42ch; color: var(--muted); font-style: italic; text-wrap: balance; }
+.site-foot .compl b { font-style: normal; font-weight: 500; color: var(--silver); }
+
+/* ---------- Buttons: candle gold ---------- */
+.btn { border-radius: 4px; background: linear-gradient(180deg, #F8DA94, #E2AA4F); color: #1A1430; font-weight: 500; box-shadow: 0 0 0 1px rgba(255, 226, 160, .6), 0 8px 26px rgba(242, 196, 109, .3); transition: box-shadow .35s, transform .35s; }
+.btn:hover, .btn:focus-visible { box-shadow: 0 0 0 1px #FFE7AE, 0 0 36px rgba(255, 204, 110, .7); transform: translateY(-1px); }
+.btn.btn-ghost { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 1px rgba(242, 196, 109, .6); }
+
+/* ---------- Portraits: candlelit arch, a gilded frame with a warm glow and a small cross at the top ---------- */
+.portrait { position: relative; padding: 5px; border: 0; background: linear-gradient(180deg, #FFE7A8, #E2AA4F 45%, #9C6A2A); box-shadow: 0 0 0 1px rgba(255, 226, 160, .5), 0 0 48px rgba(242, 196, 109, .35), 0 18px 40px rgba(0, 0, 0, .35); margin-top: 1.3rem; }
+.portrait::before { content: ""; position: absolute; left: 50%; top: -24px; width: 14px; height: 20px; translate: -50% 0; background: linear-gradient(var(--accent), var(--accent)) 50% 0 / 2.4px 100% no-repeat, linear-gradient(var(--accent), var(--accent)) 50% 32% / 100% 2.4px no-repeat; filter: drop-shadow(0 0 6px rgba(242, 196, 109, .8)); }
+.portrait-in { box-shadow: inset 0 0 0 1px rgba(26, 20, 48, .6); }
+.portrait-in img { display: block; }
+.date .date-time { display: block; margin-top: .35em; color: var(--accent); }
+.date .date-time:empty { display: none; }
