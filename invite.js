@@ -4,12 +4,12 @@
 
 window.CONFIG = window.CONFIG || {
   groom: 'Naveen Gerald', groomShort: 'Naveen',
-  groomFull: 'St. Hubert Naveen Gerald',      // used only in the invitation wording at the top
+  groomFull: 'Saint Hubert Naveen Gerald',    // invitation names at the top and under his photo
   bride: 'Felcy Agnes Mary', brideShort: 'Felcy',
   initials: ['N', 'F'],                       // left door, right door
-  groomParents: 'Mr. St. Hubert Charles Saraphion & Mrs. Josephine',
+  groomParents: 'Mr. Saint Hubert Charles Saraphion & Mrs. Josephine',
   brideParents: 'Mr. Antony Kulandai Rajan & Mrs. Christine',
-  groomSibling: 'St. Hubert Marie Nishanth', groomSiblingRole: 'Brother of',
+  groomSibling: 'Saint Hubert Marie Nishanth', groomSiblingRole: 'Brother of',
   brideSibling: 'Francis Martin Aldoe', brideSiblingRole: 'Sister of',
   groomFamily: 'The House of Hubert Charles',
   brideFamily: 'The House of Antony Rajan',
@@ -27,7 +27,7 @@ window.CONFIG = window.CONFIG || {
       map: 'https://maps.app.goo.gl/bBqVibmzXv14oN6T7', ll: [11.9421441, 79.830922], icon: 'rings' },
     { key: 'wedding', title: 'Holy Matrimony', kicker: 'Nuptial Holy Mass',
       start: '2027-01-20T16:00:00+05:30', end: '2027-01-20T18:00:00+05:30', time: '4:00 – 6:00 PM', heroTime: '4:00 PM',
-      venue: 'Je Suis L’Immaculée Conception Church', place: 'Nellithope, Puducherry',
+      venue: 'Our Lady of Assumption Church', place: 'Nellithope, Puducherry',
       map: 'https://maps.app.goo.gl/LL6hFemdPkvHNiAm8', ll: [11.9302799, 79.8108388], icon: 'church' },
     { key: 'reception', title: 'Wedding Reception', kicker: 'Dinner & celebration',
       start: '2027-01-20T18:30:00+05:30', end: '2027-01-20T21:00:00+05:30', time: '6:30 – 9:00 PM',
@@ -113,7 +113,7 @@ window.CONFIG = window.CONFIG || {
     return `<path d="M${x},${base} C${x - w},${base - h * 0.3} ${x - w * 0.6},${base - h * 0.85} ${x},${base - h} C${x + w * 0.6},${base - h * 0.85} ${x + w},${base - h * 0.3} ${x},${base} Z" fill="${fill}"/>`;
   };
 
-  /* Our Lady of the Immaculate Conception: white figure, blue sash, crown of twelve stars, crescent at her feet */
+  /* Our Lady, as the woman of Revelation 12 (the Assumption feast reading): white figure, blue sash, crown of twelve stars, crescent at her feet */
   const mary = (x, y, h) => {
     const k = h / 30;
     let stars = '';
