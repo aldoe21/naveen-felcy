@@ -25,7 +25,7 @@ window.CONFIG = window.CONFIG || {
       start: '2026-12-13T18:00:00+05:30', end: '2026-12-13T21:00:00+05:30', time: '6:00 – 9:00 PM',
       venue: 'Crystal Banquet Hall', place: 'Hotel Atithi, Puducherry',
       map: 'https://maps.app.goo.gl/bBqVibmzXv14oN6T7', ll: [11.9421441, 79.830922], icon: 'rings' },
-    { key: 'wedding', title: 'Holy Matrimony', kicker: 'Nuptial Holy Mass',
+    { key: 'wedding', title: 'Holy Matrimony', kicker: 'Wedding Holy Mass',
       start: '2027-01-20T16:00:00+05:30', end: '2027-01-20T18:00:00+05:30', time: '4:00 – 6:00 PM', heroTime: '4:00 PM',
       venue: 'Our Lady of Assumption Church', place: 'Nellithope, Puducherry',
       map: 'https://maps.app.goo.gl/LL6hFemdPkvHNiAm8', ll: [11.9302799, 79.8108388], icon: 'church' },
